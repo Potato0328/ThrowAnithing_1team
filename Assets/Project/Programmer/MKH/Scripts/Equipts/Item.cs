@@ -4,21 +4,9 @@ using UnityEngine;
 
 namespace MKH
 {
-    [System.Flags]
     public enum ItemType
     {
-        None        = 0b0,
-        
-        Helmet      = 0b1,
-        Shirts      = 0b10,
-        Glasses     = 0b100,
-        Gloves      = 0b1000,
-        Pants       = 0b10000,
-        Earring     = 0b100000,
-        Ring        = 0b1000000,
-        Shoes       = 0b10000000,
-        Necklace    = 0b100000000,
-
+        None, Helmet, Shirts, Glasses, Gloves, Pants, Earring, Ring, Shoes, Necklace
     }
 
     public enum RateType
