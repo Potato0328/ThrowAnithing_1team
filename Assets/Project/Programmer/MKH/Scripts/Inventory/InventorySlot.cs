@@ -13,9 +13,6 @@ namespace MKH
         private Item mItem;
         public Item Item { get { return mItem; } set { mItem = value; } }
 
-        [Header("해당 슬롯에 들어갈 수 있는 타입")]
-        [SerializeField] private ItemType mSlotMask;
-
         [Header("슬롯에 있는 UI 오브젝트")]
         [SerializeField] private Image mItemImage;
         public Image ItemImage { get {  return mItemImage; } set { mItemImage = value; } }
@@ -37,12 +34,6 @@ namespace MKH
             Color color = mItemImage.color;
             color.a = _alpha;
             mItemImage.color = color;
-        }
-
-        // 아이템 들어갈 타입
-        public bool IsMask(Item item)
-        {
-            return ((int)item.Type & (int)mSlotMask) == 0 ? false : true;
         }
 
         // 아이템 습득

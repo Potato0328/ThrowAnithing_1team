@@ -1278,7 +1278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6c8cec1a3434f4a940df925f2643e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSlotMask: 64
+  mSlotMask: 7
   mItemImage: {fileID: 6267764752979330288}
   equipActionManager: {fileID: 4652835971367686274}
   isEquip: 1
@@ -10444,7 +10444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6c8cec1a3434f4a940df925f2643e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSlotMask: 4
+  mSlotMask: 3
   mItemImage: {fileID: 4396892801511774893}
   equipActionManager: {fileID: 4652835971367686274}
   isEquip: 1
@@ -13206,7 +13206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6c8cec1a3434f4a940df925f2643e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSlotMask: 32
+  mSlotMask: 6
   mItemImage: {fileID: 9184210021042655082}
   equipActionManager: {fileID: 4652835971367686274}
   isEquip: 1
@@ -15716,8 +15716,6 @@ MonoBehaviour:
   _BlueChipPanel: {fileID: 0}
   _BlueChipChoice: {fileID: 0}
   _BlueChipChoicePanel: {fileID: 0}
-  _pcText: {fileID: 0}
-  _consoleText: {fileID: 0}
   open: {fileID: 8300000, guid: a1a84aaeec3d3bf4982a0dc02484b17c, type: 3}
   close: {fileID: 8300000, guid: 5eec7f170a2a18f4481ba67e6c50f138, type: 3}
 --- !u!114 &8472951566466866728
@@ -17779,7 +17777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6c8cec1a3434f4a940df925f2643e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSlotMask: 8
+  mSlotMask: 4
   mItemImage: {fileID: 6815198752458287184}
   equipActionManager: {fileID: 4652835971367686274}
   isEquip: 1
@@ -19992,7 +19990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6c8cec1a3434f4a940df925f2643e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSlotMask: 16
+  mSlotMask: 5
   mItemImage: {fileID: 7358589389649918602}
   equipActionManager: {fileID: 4652835971367686274}
   isEquip: 1
