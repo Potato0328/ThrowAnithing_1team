@@ -28,7 +28,6 @@ namespace MKH
             EventSystem.current.SetSelectedGameObject(button.gameObject);
             if (EventSystem.current.currentSelectedGameObject.transform.position == Vector3.zero)
             {
-                Debug.Log(button.gameObject.transform.position);
                 effect.transform.position = new Vector3(460, 300, 0);
             }
             else

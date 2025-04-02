@@ -24,10 +24,6 @@ namespace MKH
 
         public InventorySlotButton SlotButton;
 
-        private void Awake()
-        {
-            //SlotButton = GetComponentInChildren<InventorySlotButton>();
-        }
         // 아이템 이미지 투명도 조절
         private void SetColor(float _alpha)
         {
