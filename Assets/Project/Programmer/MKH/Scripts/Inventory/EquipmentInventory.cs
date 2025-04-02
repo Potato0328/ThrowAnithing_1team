@@ -21,7 +21,7 @@ namespace MKH
         [SerializeField] private TMP_Text mManaLabel;
 
         private EquipmentEffect mCurrentEquipmentEffect;
-        public EquipmentEffect CurrentEquipmentEffect { get { return mCurrentEquipmentEffect; } }
+        public EquipmentEffect CurrentEquipmentEffect => mCurrentEquipmentEffect;
 
         new private void Awake()
         {
@@ -34,16 +34,16 @@ namespace MKH
         }
         public void CalculateEffect()
         {
-            EquipmentEffect calcedEffect = new EquipmentEffect();
+            EquipmentEffect effect = new EquipmentEffect();
 
             foreach (InventorySlot slot in mSlots)
             {
                 if (slot.Item == null) { continue; }
 
-                calcedEffect += ((Item_Equipment)slot.Item).Effect;
+                effect += slot.Item.Effect;
             }
 
-            mCurrentEquipmentEffect = calcedEffect;
+            mCurrentEquipmentEffect = effect;
 
             mDamageLabel.text = $"{playerData.AttackPower}";
             mDefenseLabel.text = $"{playerData.Defense}";
