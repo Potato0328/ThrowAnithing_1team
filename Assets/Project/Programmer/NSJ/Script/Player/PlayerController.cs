@@ -1049,7 +1049,7 @@ public class PlayerController : MonoBehaviour, IHit, IHeal
     /// <summary>
     /// 공통계산 용
     /// </summary>
-    private int GetCommonDamage(int finalDamage, out bool isCritical)
+    private int GetCommonDamage(float finalDamage, out bool isCritical)
     {
         // 기본 스텟 데미지 
         finalDamage += Model.AttackPower;
@@ -1066,7 +1066,7 @@ public class PlayerController : MonoBehaviour, IHit, IHeal
         float attackMultiplier = 1 + Model.DamageMultiplier / 100 >= 0 ? 1 + Model.DamageMultiplier / 100 : 0;
         finalDamage = (int)(finalDamage * attackMultiplier);
 
-        return finalDamage;
+        return (int)finalDamage;
     }
     #endregion
 

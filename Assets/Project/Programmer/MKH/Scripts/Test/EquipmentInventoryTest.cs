@@ -34,7 +34,7 @@ namespace MKH
             {
                 if (slot.Item == null) { continue; }
 
-                calcedEffect += ((Item_Equipment)slot.Item).Effect;
+                calcedEffect += slot.Item.Effect;
             }
 
             mCurrentEquipmentEffect = calcedEffect;

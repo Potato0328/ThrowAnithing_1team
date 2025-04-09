@@ -181,7 +181,6 @@ public class ObjectPool : MonoBehaviour
     }
     static IEnumerator ReturnRoutine(GameObject instance, float delay)
     {
-        Debug.Log(instance);
         yield return delay.GetDelay();
         if (instance == null)
             yield break;

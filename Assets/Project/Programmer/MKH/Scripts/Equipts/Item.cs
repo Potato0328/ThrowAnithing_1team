@@ -1,69 +1,76 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace MKH
 {
-    [System.Flags]
-    public enum ItemType
-    {
-        None        = 0b0,
-        
-        Helmet      = 0b1,
-        Shirts      = 0b10,
-        Glasses     = 0b100,
-        Gloves      = 0b1000,
-        Pants       = 0b10000,
-        Earring     = 0b100000,
-        Ring        = 0b1000000,
-        Shoes       = 0b10000000,
-        Necklace    = 0b100000000,
+    public enum ItemType { None, Helmet, Shirts, Glasses, Gloves, Pants, Earring, Ring, Shoes, Necklace }
 
+    public enum RateType { Nomal, Magic, Rare }
+
+    [Serializable]
+    public struct EquipmentEffect
+    {
+        [Header("공격력"), SerializeField] private float mDamage;
+        [Header("방어력"), SerializeField] private float mDefense;
+        [Header("체력"), SerializeField] private float mHP;
+        [Header("치명타 확률"), SerializeField] private float mCritical;
+        [Header("공격 속도"), SerializeField] private float mAttackSpeed;
+        [Header("스테미나"), SerializeField] private float mStemina;
+        [Header("장비획득률"), SerializeField] private float mEquipRate;
+        [Header("이동 속도"), SerializeField] private float mSpeed;
+        [Header("마나"), SerializeField] private float mMana;
+
+        public float Damage { get => mDamage; set => mDamage = value; }
+        public float Defense { get => mDefense; set => mDefense = value; }
+        public float HP { get => mHP; set => mHP = value; }
+        public float Critical { get => mCritical; set => mCritical = value; }
+        public float AttackSpeed { get => mAttackSpeed; set => mAttackSpeed = value; }
+        public float Stemina { get => mStemina; set => mStemina = value; }
+        public float EquipRate { get => mEquipRate; set => mEquipRate = value; }
+        public float Speed { get => mSpeed; set => mSpeed = value; }
+        public float Mana { get => mMana; set => mMana = value; }
+
+
+        public static EquipmentEffect operator +(EquipmentEffect param1, EquipmentEffect param2)
+        {
+            EquipmentEffect effect = new EquipmentEffect();
+
+            effect.mDamage = param1.mDamage + param2.mDamage;
+            effect.mDefense = param1.mDefense + param2.mDefense;
+            effect.mHP = param1.mHP + param2.mHP;
+            effect.mCritical = param1.mCritical + param2.mCritical;
+            effect.mAttackSpeed = param1.mAttackSpeed + param2.mAttackSpeed;
+            effect.mStemina = param1.mStemina + param2.mStemina;
+            effect.mEquipRate = param1.mEquipRate + param2.mEquipRate;
+            effect.mSpeed = param1.mSpeed + param2.mSpeed;
+            effect.mMana = param1.mMana + param2.mMana;
+
+            return effect;
+        }
     }
 
-    public enum RateType
+    public abstract class Item : ScriptableObject
     {
-        Nomal, Magic, Rare
-    }
+        [Header("이름"), SerializeField] private string mName;
+        [Header("설명"), Multiline, SerializeField] private string mDescription;
+        [Header("아이템 타입"), SerializeField] private ItemType mItemType;
+        [Header("아이템 등급"), SerializeField] private RateType mRateType;
+        [Header("이미지"), SerializeField] private Sprite mItemImage;
+        [Header("아이템의 프리팹"), SerializeField] private GameObject mItemPrefab;
+        [Space(50)]
+        [Header("장비 아이템 효과"), SerializeField] public EquipmentEffect mEffect;
 
-    [CreateAssetMenu(fileName = "Item", menuName = "Add Item/Item")]
-    public class Item : ScriptableObject
-    {
-        #region 사용 X
-        //[Header("고유 아이디 (중복X)")]
-        //[SerializeField] private int mItmeID;
-        //public int ItemID => mItmeID;
-        #endregion
-
-        [Header("이름")]
-        [SerializeField] private string mName;
-        public string Name { get { return mName; } set { mName = value; } }
-
-        [Header("설명")]
-        [Multiline]
-        [SerializeField] private string mDescription;
-        public string Description { get { return mDescription; } set { mDescription = value; } }
-
-        [Header("아이템 타입")]
-        [SerializeField] private ItemType mItemType;
-        public ItemType Type { get { return mItemType; } }
-
-        [Header("아이템 등급")]
-        [SerializeField] private RateType mRateType;
-        public RateType Rate { get { return mRateType; } }
-
-
-        [Header("인벤토리에서 보여지는 이미지")]
-        [SerializeField] private Sprite mItemImage;
-        public Sprite Image { get { return mItemImage; } }
-
-        [Header("씬에서 오브젝트로 보여질 아이템의 프리팹")]
-        [SerializeField] private GameObject mItemPrefab;
-        public GameObject Prefab { get { return mItemPrefab; } }
+        public string Name { get => mName; set => mName = value; }
+        public string Description { get => mDescription; set => mDescription = value; }
+        public ItemType Type { get => mItemType; set => mItemType = value; }
+        public RateType Rate { get => mRateType; set => mRateType = value; }
+        public Sprite Image { get => mItemImage; set => mItemImage = value; }
+        public GameObject Prefab { get => mItemPrefab; set => mItemPrefab = value; }
+        public EquipmentEffect Effect { get => mEffect; set => mEffect = value; }
 
         public virtual Item Create()
         {
-            return null;
+            return Instantiate(this);
         }
     }
 }

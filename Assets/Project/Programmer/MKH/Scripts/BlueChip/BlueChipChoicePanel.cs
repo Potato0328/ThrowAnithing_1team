@@ -28,7 +28,6 @@ namespace MKH
             EventSystem.current.SetSelectedGameObject(button.gameObject);
             if (EventSystem.current.currentSelectedGameObject.transform.position == Vector3.zero)
             {
-                Debug.Log(button.gameObject.transform.position);
                 effect.transform.position = new Vector3(460, 300, 0);
             }
             else
@@ -55,11 +54,9 @@ namespace MKH
         {
             for (int i = 0; i < blueChipSlots.Length; i++)
             {
-                Debug.Log(i);
                 if (blueChipSlots[i].Effect == null)
                 {
                     blueChipSlots[i].AddEffect(effect);
-                    Debug.Log(effect);
                     return true;
                 }
             }
@@ -76,33 +73,20 @@ namespace MKH
 
         public void RandomBlueChip()
         {
-            List<AdditionalEffect> list = new List<AdditionalEffect>(blueChipList);
-            int[] prevIndex = new int[3];
-            int count = 0;
+            List<AdditionalEffect> shuffled = new List<AdditionalEffect>(blueChipList);
+
+            // ÇÇ¼Å-¿¹ÀÌÃ÷ ¼ÅÇÃ
+            for (int i = shuffled.Count - 1; i > 0; i--)
+            {
+                int rand = Random.Range(0, i + 1); // 0ºÎÅÍ i±îÁö Æ÷ÇÔ
+                (shuffled[i], shuffled[rand]) = (shuffled[rand], shuffled[i]);
+            }
+
             for (int i = 0; i < choiceSlots.Length; i++)
             {
-                int index = Random.Range(0, list.Count);
-                AdditionalEffect effect = list[index];
+                AdditionalEffect effect = shuffled[i];
                 choiceSlots[i].AddEffect(effect);
-                prevIndex[i] = index;
-                list.RemoveAt(index);
-                if (i != 0)
-                {
-                    if (prevIndex[i - 1] <= index)
-                    {
-                        count++;
-                        choiceSlots[i].ListIndex = index + count;
-                        prevIndex[i] = prevIndex[i - 1];
-                    }
-                    else
-                    {
-                        choiceSlots[i].ListIndex = index;
-                    }
-                }
-                else
-                {
-                    choiceSlots[i].ListIndex = index;
-                }
+                choiceSlots[i].ListIndex = blueChipList.IndexOf(effect);
             }
         }
 

@@ -30,7 +30,7 @@ public class PlayerModel : MonoBehaviour
     public float DamageReduction { get { return Data.DamageReduction; } set { Data.DamageReduction = value; } }
     #endregion
     #region 공격
-    public int AttackPower { get { return Data.AttackPower; } set { Data.AttackPower = value; } }
+    public float AttackPower { get { return Data.AttackPower; } set { Data.AttackPower = value; } }
     public float AttackPowerMultiplier { get { return Data.AttackPowerMultiplier; } set { Data.AttackPowerMultiplier = value; } }
     public float DamageMultiplier { get { return Data.DamageMultiplier; } set { Data.DamageMultiplier = value; } }
     public float AttackSpeed
@@ -320,7 +320,7 @@ public partial class PlayerData
     public struct AttackStruct
     {
         [Header("공격력")]
-        public int AttackPower;
+        public float AttackPower;
         [Header("공격력 배율")]
         public float AttackPowerMultiplier;
         [Header("데미지 배율(%)")]
@@ -526,12 +526,12 @@ public partial class PlayerData
     public float DamageReduction { get { return Data.Defense.DamageReduction; } set { Data.Defense.DamageReduction = value; } }
     #endregion
     #region 공격 
-    public int AttackPower
+    public float AttackPower
     {
         get
         {
             float attackMultiplier = 1 + AttackPowerMultiplier / 100 >= 0 ? 1 + AttackPowerMultiplier / 100 : 0; // 데미지 배율이 0까지 떨어진 경우 0으로 고정
-            return (int)((Data.Attack.AttackPower + (int)EquipStatus.Damage) * attackMultiplier); // (기본데미지+장비데미지) * 공격력 배율
+            return ((Data.Attack.AttackPower + EquipStatus.Damage) * attackMultiplier); // (기본데미지+장비데미지) * 공격력 배율
         }
         set
         {

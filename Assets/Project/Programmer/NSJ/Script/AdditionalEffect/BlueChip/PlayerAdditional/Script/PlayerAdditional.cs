@@ -17,8 +17,8 @@ public class PlayerAdditional : AdditionalEffect
         Player = player;
     }
 
-    protected int GetPlayerAttackPower(int attackPower)
+    protected float GetPlayerAttackPower(int attackPower)
     {
-        return (Model.AttackPower - (int)Model.Data.EquipStatus.Damage) + attackPower;
+        return (Model.AttackPower - Model.Data.EquipStatus.Damage) + attackPower;
     }
 }
