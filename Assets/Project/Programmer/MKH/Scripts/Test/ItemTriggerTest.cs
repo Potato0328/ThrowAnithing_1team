@@ -22,7 +22,7 @@ namespace MKH
                 for (int i = 0; i < mInventory.mSlots.Length; i++)
                 {
                     // 아이템 타입이 None이 아닐 시, 슬롯이 다 안찼을 때
-                    if (mCurrentItem.Item.Type != ItemType.None && mInventory.mSlots[i].Item == null)
+                    if (mInventory.mSlots[i].Item == null)
                     {
                         // 인벤토리에 아이템 추가
                         mInventory.AcquireItem(mCurrentItem.Item);
