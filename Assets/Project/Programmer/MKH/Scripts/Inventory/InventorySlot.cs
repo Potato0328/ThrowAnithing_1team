@@ -19,7 +19,8 @@ namespace MKH
         public bool isEquip;
 
         // 현재 슬롯에 들어 있는 아이템
-        private Item mItem;
+        [Header("장비")]
+        [SerializeField] private Item mItem;
         public Item Item
         {
             get { return mItem; }
@@ -30,6 +31,9 @@ namespace MKH
             }
         }
 
+        /// <summary>
+        /// 장비 이미지 셋팅
+        /// </summary>
         private void UpdateUI()
         {
             if (mItem != null)
@@ -45,7 +49,7 @@ namespace MKH
         }
 
         /// <summary>
-        /// 아이템 이미지의 투명도를 설정합니다.
+        /// 장비 이미지 투명도 조절
         /// </summary>
         private void SetColor(float alpha)
         {
@@ -55,7 +59,7 @@ namespace MKH
         }
 
         /// <summary>
-        /// 슬롯에 아이템을 추가하고 UI 이미지를 설정합니다.
+        /// 장비 추가
         /// </summary>
         public void AddItem(Item item)
         {
@@ -63,7 +67,7 @@ namespace MKH
         }
 
         /// <summary>
-        /// 슬롯을 비우고 UI를 초기화합니다.
+        /// 장비 초기화
         /// </summary>
         public void ClearSlot()
         {
@@ -71,7 +75,7 @@ namespace MKH
         }
 
         /// <summary>
-        /// 슬롯이 비어있는지 여부를 반환합니다.
+        /// 장비 여부 확인
         /// </summary>
         public bool IsEmpty()
         {
@@ -79,7 +83,7 @@ namespace MKH
         }
 
         /// <summary>
-        /// 아이템 사용 요청. 장비 아이템이면 장착 시도합니다.
+        /// 장비 사용
         /// </summary>
         public void UseItem()
         {
@@ -96,8 +100,7 @@ namespace MKH
         }
 
         /// <summary>
-        /// 장비를 장착 슬롯으로 이동시킵니다.
-        /// 현재 슬롯은 비우고 장비 매니저에게 전달합니다.
+        /// 장비를 인벤토리 -> 장비로 이동
         /// </summary>
         public void ChangeEquipmentSlot()
         {
