@@ -9,35 +9,27 @@ namespace MKH
         [SerializeField] private EquipmentInventory mEquipmentInventory;
         [SerializeField] private InventoryMain minventoryMain;
 
-        // 장비 교체
+        /// <summary>
+        /// 장비 장착, 교체
+        /// 장비 효과 업데이트
+        /// </summary>
         public bool UseEquip(Item item)
         {
             InventorySlot equipmentSlot = mEquipmentInventory.GetEquipmentSlot(item.Type);
             InventorySlot inventorySlot = minventoryMain.IsCanAquireItem(item);
 
+            if (equipmentSlot == null)
+            {
+                return false;
+            }
+
             Item tempItem = equipmentSlot.Item;
 
             equipmentSlot.AddItem(item);
 
-            if (tempItem != null)
+            if (tempItem != null && inventorySlot != null)
             {
-                equipmentSlot.ClearSlot();
-                equipmentSlot.AddItem(item);
                 inventorySlot.AddItem(tempItem);
-            }
-
-            mEquipmentInventory.CalculateEffect();
-            return true;
-        }
-
-        // 장비 삭제
-        public bool RemoveEquip(Item item)
-        {
-            if (item != null)
-            {
-                InventorySlot equipmentSlot = mEquipmentInventory.GetEquipmentSlot(item.Type);
-
-                equipmentSlot.ClearSlot();
             }
 
             mEquipmentInventory.CalculateEffect();

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MKH
@@ -5,11 +7,11 @@ namespace MKH
     abstract public class InventoryBase : MonoBehaviour
     {
         [SerializeField] protected GameObject mInventorySlotsParent;
-        [SerializeField] public InventorySlot[] mSlots;
+        [SerializeField] public List<InventorySlot> mSlots;
 
         protected void Awake()
         {
-             mSlots = mInventorySlotsParent.GetComponentsInChildren<InventorySlot>();
+             mSlots = mInventorySlotsParent.GetComponentsInChildren<InventorySlot>().ToList();
         }
     }
 }

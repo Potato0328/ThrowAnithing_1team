@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using UnityEditor.Search;
 using UnityEngine;
 
 namespace MKH
@@ -23,7 +25,7 @@ namespace MKH
         {
             Item _item = item.Create(); // 아이템 복제
 
-            for (int i = 0; i < mSlots.Length; i++)
+            for (int i = 0; i < mSlots.Count; i++)
             {
                 // 빈 슬롯이 있을 경우 아이템을 추가하고 종료
                 if (mSlots[i].IsEmpty())
@@ -40,7 +42,7 @@ namespace MKH
         /// <returns>빈 슬롯이 있다면 해당 슬롯, 없다면 null 반환</returns>
         public InventorySlot IsCanAquireItem(Item item)
         {
-            for (int i = 0; i < mSlots.Length; i++)
+            for (int i = 0; i < mSlots.Count; i++)
             {
                 if (mSlots[i].IsEmpty())
                 {
@@ -56,7 +58,7 @@ namespace MKH
         /// </summary>
         public void Sorting()
         {
-            for (int i = 0; i < mSlots.Length - 1; i++)
+            for (int i = 0; i < mSlots.Count - 1; i++)
             {
                 // 앞 슬롯이 비어있고, 뒷 슬롯에 아이템이 있는 경우
                 if (mSlots[i].IsEmpty() && !mSlots[i + 1].IsEmpty())
