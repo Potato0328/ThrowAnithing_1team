@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MKH
 {
-    public enum ItemType { None, Helmet, Shirts, Glasses, Gloves, Pants, Earring, Ring, Shoes, Necklace }
+    public enum ItemType { Helmet, Shirts, Glasses, Gloves, Pants, Earring, Ring, Shoes, Necklace }
 
     public enum RateType { Nomal, Magic, Rare }
 

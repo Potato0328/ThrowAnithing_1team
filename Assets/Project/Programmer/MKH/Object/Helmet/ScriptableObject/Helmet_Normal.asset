@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mName: 
   mDescription: 
-  mItemType: 1
+  mItemType: 0
   mRateType: 0
   mItemImage: {fileID: -1034199836, guid: 737f0f2656384af46b4b92cd9ab63349, type: 3}
   mItemPrefab: {fileID: 0}
