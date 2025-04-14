@@ -6,10 +6,6 @@ namespace MKH
     // 인벤토리 한 칸(슬롯)을 표현하는 클래스
     public class InventorySlot : MonoBehaviour
     {
-        // 현재 슬롯에 들어 있는 아이템
-        private Item mItem;
-        public Item Item { get { return mItem; } set { mItem = value; } }
-
         // 슬롯의 아이템 아이콘 이미지
         [Header("슬롯에 있는 UI 오브젝트")]
         [SerializeField] private Image mItemImage;
@@ -22,13 +18,39 @@ namespace MKH
         // 인벤토리 칸, 장비 칸 구별
         public bool isEquip;
 
+        // 현재 슬롯에 들어 있는 아이템
+        private Item mItem;
+        public Item Item
+        {
+            get { return mItem; }
+            set
+            {
+                mItem = value;
+                UpdateUI();
+            }
+        }
+
+        private void UpdateUI()
+        {
+            if (mItem != null)
+            {
+                mItemImage.sprite = mItem.Image;
+                SetColor(1f);
+            }
+            else
+            {
+                mItemImage.sprite = null;
+                SetColor(0f);
+            }
+        }
+
         /// <summary>
         /// 아이템 이미지의 투명도를 설정합니다.
         /// </summary>
-        private void SetColor(float _alpha)
+        private void SetColor(float alpha)
         {
             Color color = mItemImage.color;
-            color.a = _alpha;
+            color.a = alpha;
             mItemImage.color = color;
         }
 
@@ -37,9 +59,7 @@ namespace MKH
         /// </summary>
         public void AddItem(Item item)
         {
-            mItem = item;
-            mItemImage.sprite = mItem.Image;
-            SetColor(1); // 보이게 설정
+            Item = item;
         }
 
         /// <summary>
@@ -47,9 +67,7 @@ namespace MKH
         /// </summary>
         public void ClearSlot()
         {
-            mItem = null;
-            mItemImage.sprite = null;
-            SetColor(0); // 투명하게
+            Item = null;
         }
 
         /// <summary>
@@ -65,6 +83,9 @@ namespace MKH
         /// </summary>
         public void UseItem()
         {
+            if (mItem == null)
+                return;
+
             if (mItem != null)
             {
                 if (mItem.Type >= ItemType.Helmet && mItem.Type <= ItemType.Necklace)
@@ -83,14 +104,6 @@ namespace MKH
             Item item = mItem;
             ClearSlot();
             equipActionManager.UseEquip(item);
-        }
-
-        /// <summary>
-        /// 장비를 해제합니다.
-        /// </summary>
-        public void RemoveEquipmentSlot()
-        {
-            equipActionManager.RemoveEquip(mItem);
         }
     }
 }
