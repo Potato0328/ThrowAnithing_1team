@@ -81,7 +81,6 @@ namespace MKH
                 slot.UseItem();
                 GameObject obj1 = ObjectPool.Get(choiceEffect, new Vector3(slot.transform.position.x, slot.transform.position.y, 0), Quaternion.identity, 0.5f);
                 obj1.transform.SetParent(effectUI.transform);
-                mInventory.Sorting();
                 Debug.Log("장비 장착");
             }
             else if (slot.Item == null)
@@ -126,10 +125,9 @@ namespace MKH
                 saveSystem.GetCoin(coinsEarned);
 
                 SoundManager.PlaySFX(ivBreak);
-                slot.ClearSlot();
+                slot.RemoveItem();
                 GameObject obj1 = ObjectPool.Get(breakEffect, new Vector3(slot.transform.position.x, slot.transform.position.y, 0), Quaternion.identity, 1f);
                 obj1.transform.SetParent(effectUI.transform);
-                mInventory.Sorting();
                 Debug.Log($"장비 분해");
 
             }
