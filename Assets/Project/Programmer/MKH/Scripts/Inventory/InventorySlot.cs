@@ -108,5 +108,12 @@ namespace MKH
             ClearSlot();
             equipActionManager.UseEquip(item);
         }
+
+        public void RemoveItem()
+        {
+            Item item = mItem;
+            ClearSlot();
+            equipActionManager.UpdateInventorySlots();
+        }
     }
 }
