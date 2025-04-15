@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.Search;
-using UnityEngine;
 
 namespace MKH
 {
@@ -23,14 +21,13 @@ namespace MKH
         /// </summary>
         public void AcquireItem(Item item)
         {
-            Item _item = item.Create(); // 아이템 복제
+            Item newItem = item.Create(); // 아이템 복제
 
-            for (int i = 0; i < mSlots.Count; i++)
+            foreach (var slot in mSlots)
             {
-                // 빈 슬롯이 있을 경우 아이템을 추가하고 종료
-                if (mSlots[i].IsEmpty())
+                if (slot.IsEmpty())
                 {
-                    mSlots[i].AddItem(_item);
+                    slot.AddItem(newItem);
                     return;
                 }
             }
@@ -42,32 +39,19 @@ namespace MKH
         /// <returns>빈 슬롯이 있다면 해당 슬롯, 없다면 null 반환</returns>
         public InventorySlot IsCanAquireItem(Item item)
         {
-            for (int i = 0; i < mSlots.Count; i++)
+            foreach (var slot in mSlots)
             {
-                if (mSlots[i].IsEmpty())
+                if (slot.IsEmpty())
                 {
-                    return mSlots[i];
+                    return slot;
                 }
             }
             return null;
         }
 
-        /// <summary>
-        /// 인벤토리 슬롯을 정렬하여 빈 칸 없이 아이템을 당깁니다.
-        /// 앞쪽이 비어 있고, 뒤에 아이템이 있으면 앞으로 이동시킴.
-        /// </summary>
-        public void Sorting()
+        public List<InventorySlot> GetInventorySlots()
         {
-            for (int i = 0; i < mSlots.Count - 1; i++)
-            {
-                // 앞 슬롯이 비어있고, 뒷 슬롯에 아이템이 있는 경우
-                if (mSlots[i].IsEmpty() && !mSlots[i + 1].IsEmpty())
-                {
-                    // 뒷 슬롯의 아이템을 앞 슬롯으로 옮기고, 뒷 슬롯은 비움
-                    mSlots[i].AddItem(mSlots[i + 1].Item);
-                    mSlots[i + 1].ClearSlot();
-                }
-            }
+            return mSlots;
         }
     }
 }
