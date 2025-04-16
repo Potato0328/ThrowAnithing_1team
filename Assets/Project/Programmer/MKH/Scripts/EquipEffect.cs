@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public struct MEquipmentEffect
+public struct EquipmentEffect
 {
     [Header("공격력")] public float mDamage;
     [Header("방어력")] public float mDefense;
@@ -13,9 +13,19 @@ public struct MEquipmentEffect
     [Header("이동 속도")] public float mSpeed;
     [Header("마나")] public float mMana;
 
-    public static MEquipmentEffect operator +(MEquipmentEffect param1, MEquipmentEffect param2)
+    public float Damage { get => mDamage; set => mDamage = value; }
+    public float Defense { get => mDefense; set => mDefense = value; }
+    public float HP { get => mHP; set => mHP = value; }
+    public float Critical { get => mCritical; set => mCritical = value; }
+    public float AttackSpeed { get => mAttackSpeed; set => mAttackSpeed = value; }
+    public float Stemina { get => mStemina; set => mStemina = value; }
+    public float EquipRate { get => mEquipRate; set => mEquipRate = value; }
+    public float Speed { get => mSpeed; set => mSpeed = value; }
+    public float Mana { get => mMana; set => mMana = value; }
+
+    public static EquipmentEffect operator +(EquipmentEffect param1, EquipmentEffect param2)
     {
-        MEquipmentEffect effect = new MEquipmentEffect();
+        EquipmentEffect effect = new EquipmentEffect();
 
         effect.mDamage = param1.mDamage + param2.mDamage;
         effect.mDefense = param1.mDefense + param2.mDefense;
