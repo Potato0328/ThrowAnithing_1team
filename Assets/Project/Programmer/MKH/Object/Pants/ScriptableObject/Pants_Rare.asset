@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabe504b96bd48a4ab205bb575087e07, type: 3}
   m_Name: Pants_Rare
   m_EditorClassIdentifier: 
-  mName: 
-  mDescription: 
-  mItemType: 4
-  mRateType: 2
-  mItemImage: {fileID: 1169202664, guid: 737f0f2656384af46b4b92cd9ab63349, type: 3}
-  mItemPrefab: {fileID: 0}
-  mEffect:
-    mDamage: 0
-    mDefense: 0
-    mHP: 0
-    mCritical: 0
-    mAttackSpeed: 0
-    mStemina: 0
-    mEquipRate: 0
-    mSpeed: 0
-    mMana: 0
+  itemName: 
+  description: 
+  itemType: 4
+  rateType: 2
+  icon: {fileID: 1886433910, guid: 737f0f2656384af46b4b92cd9ab63349, type: 3}
+  prefab: {fileID: 0}
+  mainStatKey: "\uC2A4\uD14C\uBBF8\uB098"
+  subStatKeys:
+  - "\uCCB4\uB825"
+  - "\uBC29\uC5B4\uB825"
+  - "\uCE58\uD655"
+  - "\uACF5\uC18D"
+  - "\uC7A5\uBE44\uD68D\uB4DD\uB960 \uC99D\uAC00"
+  - "\uACF5\uACA9\uB825"
+  - "\uC774\uC18D"
+  - "\uB9C8\uB098"
