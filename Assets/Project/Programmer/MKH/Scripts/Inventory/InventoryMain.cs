@@ -19,9 +19,9 @@ namespace MKH
         /// <summary>
         /// 아이템을 획득하여 인벤토리의 빈 슬롯에 추가합니다.
         /// </summary>
-        public void AcquireItem(Item item)
+        public void AcquireItem(ItemData item)
         {
-            Item newItem = item.Create(); // 아이템 복제
+            Item newItem = ItemSystemInitializer.Factory.Create(item); // 아이템 복제
 
             foreach (var slot in mSlots)
             {
