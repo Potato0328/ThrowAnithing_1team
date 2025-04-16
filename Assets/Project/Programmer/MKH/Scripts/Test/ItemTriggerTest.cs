@@ -5,7 +5,7 @@ namespace MKH
 {
     public class ItemTriggerTest : MonoBehaviour
     {
-        private ItemPickUp mCurrentItem;
+        private ItemPickUpTest mCurrentItem;
 
         [SerializeField] GameObject particle;
 
@@ -14,7 +14,7 @@ namespace MKH
         private void OnTriggerEnter(Collider other)
         {
             // other의 오브젝트에서 ItemPickUp 불러오기
-            mCurrentItem = other.transform.GetComponent<ItemPickUp>();
+            mCurrentItem = other.transform.GetComponent<ItemPickUpTest>();
 
             // Item 태그 붙은 other 오브젝트
             if (other.gameObject.tag == Tag.Item)
