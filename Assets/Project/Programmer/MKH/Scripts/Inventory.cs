@@ -45,7 +45,6 @@ public class Inventory : MonoBehaviour
 
         InitGetComponent();
 
-
         playerData.Inventory.Inventory = EquipInventory;
         playerData.Inventory.InventoryMain = InventoryMain;
         playerData.Inventory.BlueChipChoice = BlueChipChoice;
@@ -55,7 +54,6 @@ public class Inventory : MonoBehaviour
         playerData.Inventory.BlueChipChoiceController = BlueChipChoiceController;
         playerData.Inventory.PcText = PcText;
         playerData.Inventory.ConsloeText = ConsoleText;
-
     }
 
     private void InitGetComponent()
@@ -66,10 +64,5 @@ public class Inventory : MonoBehaviour
         BlueChipPanel = GetComponentInChildren<BlueChipPanel>();
         BlueChipChoicePanel = GetComponentInChildren<BlueChipChoicePanel>();
         BlueChipChoiceController = GetComponentInChildren<BlueChipChoiceController>();
-    }
-
-    private void InitSingleTon()
-    {
-
     }
 }

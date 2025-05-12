@@ -58,47 +58,8 @@ namespace MKH
 
         public InventorySlot GetEquipmentSlot(ItemType type)
         {
-            switch (type)
-            {
-                case ItemType.Helmet:
-                    {
-                        return mSlots[0];
-                    }
-                case ItemType.Shirts:
-                    {
-                        return mSlots[1];
-                    }
-                case ItemType.Glasses:
-                    {
-                        return mSlots[2];
-                    }
-                case ItemType.Gloves:
-                    {
-                        return mSlots[3];
-                    }
-                case ItemType.Pants:
-                    {
-                        return mSlots[4];
-                    }
-                case ItemType.Earring:
-                    {
-                        return mSlots[5];
-                    }
-                case ItemType.Ring:
-                    {
-                        return mSlots[6];
-                    }
-                case ItemType.Shoes:
-                    {
-                        return mSlots[7];
-                    }
-                case ItemType.Necklace:
-                    {
-                        return mSlots[8];
-                    }
-            }
-
-            return null;
+            int index = (int)type;
+            return (index >= 0 && index < mSlots.Count) ? mSlots[index] : null;
         }
     }
 }

@@ -1,71 +1,66 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CsvManager : MonoBehaviour
+namespace MKH
 {
-    private static CsvManager instance;
-    public static CsvManager Instance
+    public class CsvManager : MonoBehaviour
     {
-        get
+        private static CsvManager instance;
+        public static CsvManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    GameObject obj = new GameObject("CsvManager");
+                    instance = obj.AddComponent<CsvManager>();
+                    DontDestroyOnLoad(obj);
+                }
+                return instance;
+            }
+        }
+
+        private readonly Dictionary<ItemType, CsvDictionary> csvData = new();
+
+        private void Awake()
         {
             if (instance == null)
             {
-                instance = new CsvManager();
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+                CsvData();
             }
-            return instance;
+            else
+            {
+                Destroy(gameObject);
+            }
+
         }
-    }
 
-    [SerializeField] public CsvDictionary earring;
-    [SerializeField] public CsvDictionary glasses;
-    [SerializeField] public CsvDictionary gloves;
-    [SerializeField] public CsvDictionary helmet;
-    [SerializeField] public CsvDictionary necklace;
-    [SerializeField] public CsvDictionary pants;
-    [SerializeField] public CsvDictionary ring;
-    [SerializeField] public CsvDictionary shirts;
-    [SerializeField] public CsvDictionary shoes;
-
-    private void Awake()
-    {
-        if (instance == null)
+        private void CsvData()
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            AddCsv(ItemType.Earring, "Import/DataTable/EquipCSV - Earring.csv");
+            AddCsv(ItemType.Glasses, "Import/DataTable/EquipCSV - Glasses.csv");
+            AddCsv(ItemType.Gloves, "Import/DataTable/EquipCSV - Gloves.csv");
+            AddCsv(ItemType.Helmet, "Import/DataTable/EquipCSV - Helmet.csv");
+            AddCsv(ItemType.Necklace, "Import/DataTable/EquipCSV - Necklace.csv");
+            AddCsv(ItemType.Pants, "Import/DataTable/EquipCSV - Pants.csv");
+            AddCsv(ItemType.Ring, "Import/DataTable/EquipCSV - Ring.csv");
+            AddCsv(ItemType.Shirts, "Import/DataTable/EquipCSV - Shirts.csv");
+            AddCsv(ItemType.Shoes, "Import/DataTable/EquipCSV - Shoes.csv");
         }
-        else
+
+        private void AddCsv(ItemType type, string path)
         {
-            Destroy(instance);
+            CsvDictionary csv = new CsvDictionary(path, ',');
+            CsvReader.Read(csv);
+            csvData[type] = csv;
         }
 
-        CsvParse();
-        CsvRead();
-    }
-
-    private void CsvParse()
-    {
-        earring = new("Import/DataTable/EquipCSV - Earring.csv", ',');
-        glasses = new("Import/DataTable/EquipCSV - Glasses.csv", ',');
-        gloves = new("Import/DataTable/EquipCSV - Gloves.csv", ',');
-        helmet = new("Import/DataTable/EquipCSV - Helmet.csv", ',');
-        necklace = new("Import/DataTable/EquipCSV - Necklace.csv", ',');
-        pants = new("Import/DataTable/EquipCSV - Pants.csv", ',');
-        ring = new("Import/DataTable/EquipCSV - Ring.csv", ',');
-        shirts = new("Import/DataTable/EquipCSV - Shirts.csv", ',');
-        shoes = new("Import/DataTable/EquipCSV - Shoes.csv", ',');
-    }
-
-    private void CsvRead()
-    {
-        CsvReader.Read(earring);
-        CsvReader.Read(glasses);
-        CsvReader.Read(gloves);
-        CsvReader.Read(helmet);
-        CsvReader.Read(necklace);
-        CsvReader.Read(pants);
-        CsvReader.Read(ring);
-        CsvReader.Read(shirts);
-        CsvReader.Read(shoes);
+        public CsvDictionary GetCsv(ItemType type)
+        {
+            return csvData.TryGetValue(type, out var csv) ? csv : null;
+        }
     }
 }

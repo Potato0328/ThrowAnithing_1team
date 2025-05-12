@@ -7,8 +7,8 @@ namespace MKH
     public class ItemPickUp : MonoBehaviour
     {
         [Header("해당 오브젝트에 할당되는 아이템")]
-        [SerializeField] private Item mItem;
-        public Item Item { get { return mItem; } }
+        [SerializeField] private ItemData mItem;
+        public ItemData Item { get { return mItem; } }
 
         Vector3 pos = new Vector3(0, 1, 0);
         private float range = 0.2f;

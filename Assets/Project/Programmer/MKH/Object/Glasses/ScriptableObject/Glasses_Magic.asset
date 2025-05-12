@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0f292feffd81df4b81ebd711a459792, type: 3}
   m_Name: Glasses_Magic
   m_EditorClassIdentifier: 
-  mName: 
-  mDescription: 
-  mItemType: 3
-  mRateType: 1
-  mItemImage: {fileID: -538364639, guid: 737f0f2656384af46b4b92cd9ab63349, type: 3}
-  mItemPrefab: {fileID: 0}
-  mEffect:
-    mDamage: 0
-    mDefense: 0
-    mHP: 0
-    mCritical: 0
-    mAttackSpeed: 0
-    mStemina: 0
-    mEquipRate: 0
-    mSpeed: 0
-    mMana: 0
+  itemName: 
+  description: 
+  itemType: 2
+  rateType: 1
+  icon: {fileID: 1129133037, guid: 737f0f2656384af46b4b92cd9ab63349, type: 3}
+  prefab: {fileID: 0}
+  mainStatKey: "\uCE58\uD655"
+  subStatKeys:
+  - "\uCCB4\uB825"
+  - "\uBC29\uC5B4\uB825"
+  - "\uACF5\uC18D"
+  - "\uC2A4\uD14C\uBBF8\uB098"
+  - "\uC7A5\uBE44\uD68D\uB4DD\uB960 \uC99D\uAC00"
+  - "\uACF5\uACA9\uB825"
+  - "\uC774\uC18D"
+  - "\uB9C8\uB098"

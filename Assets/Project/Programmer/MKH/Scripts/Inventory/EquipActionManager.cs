@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MKH
@@ -9,7 +10,10 @@ namespace MKH
         [SerializeField] private EquipmentInventory mEquipmentInventory;
         [SerializeField] private InventoryMain minventoryMain;
 
-        // 장비 교체
+        /// <summary>
+        /// 장비 장착, 교체
+        /// 장비 효과 업데이트
+        /// </summary>
         public bool UseEquip(Item item)
         {
             InventorySlot equipmentSlot = mEquipmentInventory.GetEquipmentSlot(item.Type);
@@ -19,29 +23,45 @@ namespace MKH
 
             equipmentSlot.AddItem(item);
 
-            if (tempItem != null)
+            if (tempItem == null)
             {
-                equipmentSlot.ClearSlot();
-                equipmentSlot.AddItem(item);
+                UpdateInventorySlots();
+            }
+            else if (tempItem != null)
+            {
                 inventorySlot.AddItem(tempItem);
             }
 
             mEquipmentInventory.CalculateEffect();
+            UpdateInventorySlots();
             return true;
         }
 
-        // 장비 삭제
-        public bool RemoveEquip(Item item)
+        public void UpdateInventorySlots()
         {
-            if (item != null)
-            {
-                InventorySlot equipmentSlot = mEquipmentInventory.GetEquipmentSlot(item.Type);
+            List<InventorySlot> slots = minventoryMain.GetInventorySlots();
+            List<Item> items = new List<Item>(slots.Count);
 
-                equipmentSlot.ClearSlot();
+            foreach (var slot in slots)
+            {
+                if (!slot.IsEmpty())
+                {
+                    items.Add(slot.Item);
+                }
             }
 
-            mEquipmentInventory.CalculateEffect();
-            return true;
+            for (int i = 0; i < slots.Count; i++)
+            {
+                if (i < items.Count)
+                {
+                    slots[i].AddItem(items[i]);
+                }
+                else
+                {
+                    slots[i].ClearSlot();
+                }
+            }
         }
+
     }
 }

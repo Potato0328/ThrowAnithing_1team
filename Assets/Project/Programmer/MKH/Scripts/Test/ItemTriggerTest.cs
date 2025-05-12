@@ -5,7 +5,7 @@ namespace MKH
 {
     public class ItemTriggerTest : MonoBehaviour
     {
-        private ItemPickUp mCurrentItem;
+        private ItemPickUpTest mCurrentItem;
 
         [SerializeField] GameObject particle;
 
@@ -14,7 +14,7 @@ namespace MKH
         private void OnTriggerEnter(Collider other)
         {
             // other의 오브젝트에서 ItemPickUp 불러오기
-            mCurrentItem = other.transform.GetComponent<ItemPickUp>();
+            mCurrentItem = other.transform.GetComponent<ItemPickUpTest>();
 
             // Item 태그 붙은 other 오브젝트
             if (other.gameObject.tag == Tag.Item)
@@ -22,7 +22,7 @@ namespace MKH
                 for (int i = 0; i < mInventory.mSlots.Length; i++)
                 {
                     // 아이템 타입이 None이 아닐 시, 슬롯이 다 안찼을 때
-                    if (mCurrentItem.Item.Type != ItemType.None && mInventory.mSlots[i].Item == null)
+                    if (mInventory.mSlots[i].Item == null)
                     {
                         // 인벤토리에 아이템 추가
                         mInventory.AcquireItem(mCurrentItem.Item);

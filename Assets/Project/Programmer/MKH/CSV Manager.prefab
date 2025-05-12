@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3189407977680667561}
   - component: {fileID: 8278077783846191457}
+  - component: {fileID: 6307119347301216675}
   m_Layer: 0
   m_Name: CSV Manager
   m_TagString: Untagged
@@ -44,30 +45,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 417d1f5fc9a2a804a828dbe776c42a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  earring:
-    _filePath: 
-    <SplitSymbol>k__BackingField: 0
-  glasses:
-    _filePath: 
-    <SplitSymbol>k__BackingField: 0
-  gloves:
-    _filePath: 
-    <SplitSymbol>k__BackingField: 0
-  helmet:
-    _filePath: 
-    <SplitSymbol>k__BackingField: 0
-  necklace:
-    _filePath: 
-    <SplitSymbol>k__BackingField: 0
-  pants:
-    _filePath: 
-    <SplitSymbol>k__BackingField: 0
-  ring:
-    _filePath: 
-    <SplitSymbol>k__BackingField: 0
-  shirts:
-    _filePath: 
-    <SplitSymbol>k__BackingField: 0
-  shoes:
-    _filePath: 
-    <SplitSymbol>k__BackingField: 0
+--- !u!114 &6307119347301216675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2995268659881284197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eda79bedf76a88e4bba4cb7b234236fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

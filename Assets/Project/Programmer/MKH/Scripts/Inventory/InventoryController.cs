@@ -7,18 +7,14 @@ namespace MKH
     [RequireComponent(typeof(SaveSystem))]
     public class InventoryController : MonoBehaviour
     {
-        [Header("인벤토리 및 장비")]
-        [SerializeField] GameObject mInventorySlotsParent;      // 인벤토리 슬롯 모음집
-        [SerializeField] InventorySlot[] ivSlots;               // 인벤토리 슬롯들
-        [SerializeField] GameObject mEquipmentSlotsParent;      // 장비 슬롯 모음집
-        [SerializeField] InventorySlot[] eqSlots;               // 장비 슬롯들
+        [Header("패널")]
         [SerializeField] GameObject blueChipPanel;              // 블루칩 패널
-        [SerializeField] GameObject inventory;                  // 인벤토리
-        InventoryMain mInventory;                               // 메인 인벤토리
+        [SerializeField] GameObject inventory;                  // 인벤토리 오브젝트
 
-        [Header("슬롯")]
-        [SerializeField] InventorySlot[] slots;                 // 슬롯 버튼
-        int buttonCount;                                        // 슬롯 개수
+        [Header("인벤토리, 장비")]
+        [SerializeField] InventoryMain mInventory;              // 인벤토리
+        [SerializeField] EquipmentInventory mEquipInventory;    // 장비
+
 
         [Header("아이템 설명")]
         [SerializeField] TMP_Text ivName;                       // 인벤토리 아이템 이름
@@ -35,22 +31,17 @@ namespace MKH
         [Header("코인 저장")]
         [SerializeField] SaveSystem saveSystem;                 // 분해한 코인 저장 역활
 
-        [SerializeField] GameObject effectUI;
-        [SerializeField] GameObject clickEffect;
-        [SerializeField] GameObject choiceEffect;
-        [SerializeField] GameObject breakEffect;
+        [Header("이펙트")]
+        [SerializeField] GameObject effectUI;                   // 이펙트 
+        [SerializeField] GameObject clickEffect;                // 클릭 이펙트
+        [SerializeField] GameObject choiceEffect;               // 선택 이펙트
+        [SerializeField] GameObject breakEffect;                // 분해 이펙트
 
         private void Awake()
         {
-            // 인벤토리, 장비 슬롯들 불러오기
-            ivSlots = mInventorySlotsParent.GetComponentsInChildren<InventorySlot>();
-            eqSlots = mEquipmentSlotsParent.GetComponentsInChildren<InventorySlot>();
             mInventory = GetComponent<InventoryMain>();
-        }
+            mEquipInventory = GetComponent<EquipmentInventory>();
 
-        private void Start()
-        {
-            buttonCount = slots.Length;
         }
 
         private void Update()
@@ -70,102 +61,10 @@ namespace MKH
             Info();
         }
 
-        #region 키 조작(초기 버전) 사용 X
-        /* public void Move()
-         {
-             float x = 0;//InputKey.GetAxis(InputKey.Horizontal);       // 좌 우 조작
-             float y = 0;//InputKey.GetAxis(InputKey.Vertical);         // 상 하 조작
-
-             // 인벤토리만 켜져있을 때
-             if (inventory.activeSelf && !blueChipPanel.activeSelf)
-             {
-                 // 왼쪽
-                 if (x < 0)
-                 {
-                     if (selectedButtonsIndex > 0 && axisInUse == false)
-                     {
-                         axisInUse = true;
-                         selectedButtonsIndex -= 1;
-                     }
-                 }
-                 // 오른쪽
-                 else if (x > 0)
-                 {
-                     if (selectedButtonsIndex < slots.Length - 1 && axisInUse == false)
-                     {
-                         axisInUse = true;
-                         selectedButtonsIndex += 1;
-                     }
-                 }
-                 // 위
-                 else if (y > 0)
-                 {
-                     if (selectedButtonsIndex > 2 && axisInUse == false)
-                     {
-                         axisInUse = true;
-                         selectedButtonsIndex -= 3;
-                     }
-                 }
-                 // 아래
-                 else if (y < 0)
-                 {
-                     if (selectedButtonsIndex < slots.Length - 3 && axisInUse == false)
-                     {
-                         axisInUse = true;
-                         selectedButtonsIndex += 3;
-                     }
-                 }
-                 // 키 멈춤 방지
-                 else
-                 {
-                     axisInUse = false;
-                 }
-             }
-
-
-             // 선택 슬롯 색 입히기
-             //for (int i = 0; i < slots.Length; i++)
-             //{
-             //    if (i == selectedButtonsIndex)
-             //    {
-             //        slots[i].GetComponent<Image>().color = HighlightedColor;
-             //    }
-             //    else
-             //    {
-             //        slots[i].GetComponent<Image>().color = color;
-             //    }
-             //}
-         }*/
-        #endregion
-
         #region 아이템 버튼 조작
         // 장비 장착, 교체
         public void Choice()
         {
-            #region 초기 버전 사용 X
-            /* // 인벤토리만 켜져있을 때
-             if (inventory.activeSelf && !blueChipPanel.activeSelf)
-             {
-                 int index = selectedButtonsIndex;
-                 // 아이템 장착
-                 // 인벤토리
-                 if (index >= 9)
-                 {
-                     if (ivSlots[index - 9].Item != null)
-                     {
-                         ivSlots[index - 9].UseItem();
-                         mInventory.Sorting();
-                         Debug.Log($"인벤토리 {index - 9}번 장비 장착");
-                     }
-                     else if (ivSlots[index - 9].Item == null)
-                     {
-                         Debug.Log("장착 할 장비가 없습니다.");
-                         return;
-                     }
-                 }
-             }*/
-            #endregion
-
             GameObject obj = EventSystem.current.currentSelectedGameObject;
             // 예외처리
             if (obj == null)
@@ -182,7 +81,6 @@ namespace MKH
                 slot.UseItem();
                 GameObject obj1 = ObjectPool.Get(choiceEffect, new Vector3(slot.transform.position.x, slot.transform.position.y, 0), Quaternion.identity, 0.5f);
                 obj1.transform.SetParent(effectUI.transform);
-                mInventory.Sorting();
                 Debug.Log("장비 장착");
             }
             else if (slot.Item == null)
@@ -194,51 +92,6 @@ namespace MKH
         // 장비 분해
         public void Break()
         {
-            #region 초기 버전 사용 X
-            /*if (inventory.activeSelf && !blueChipPanel.activeSelf)
-            {
-                int index = selectedButtonsIndex;
-                // 아이템 분해
-                // 인벤토리
-                if (index >= 9)
-                {
-                    if (ivSlots[index - 9].Item != null)
-                    {
-                        // 습득 코인 변수
-                        int coinsEarned = 0;
-                        // 등급에 따라 습득 코인 수 변경
-                        switch (ivSlots[index - 9].Item.Rate)
-                        {
-                            case RateType.Nomal:
-                                coinsEarned = 10; // 일반 등급
-                                break;
-                            case RateType.Magic:
-                                coinsEarned = 50; // 마법 등급
-                                break;
-                            case RateType.Rare:
-                                coinsEarned = 200; // 희귀 등급
-                                break;
-                            default:
-                                coinsEarned = 0;
-                                break;
-                        }
-                        saveSystem.GetCoin(coinsEarned);
-
-                        ivSlots[index - 9].ClearSlot();
-                        mInventory.Sorting();
-                        Debug.Log($"인벤토리 {index - 9}번 장비 분해");
-                        Debug.Log(coinsEarned);
-
-                    }
-                    else if (ivSlots[index - 9].Item == null)
-                    {
-                        Debug.Log($"{index - 9}분해 할 장비가 없습니다.");
-                        return;
-                    }
-                }
-            }*/
-            #endregion
-
             GameObject obj = EventSystem.current.currentSelectedGameObject;
             // 예외처리
             if (obj == null)
@@ -272,10 +125,9 @@ namespace MKH
                 saveSystem.GetCoin(coinsEarned);
 
                 SoundManager.PlaySFX(ivBreak);
-                slot.ClearSlot();
+                slot.RemoveItem();
                 GameObject obj1 = ObjectPool.Get(breakEffect, new Vector3(slot.transform.position.x, slot.transform.position.y, 0), Quaternion.identity, 1f);
                 obj1.transform.SetParent(effectUI.transform);
-                mInventory.Sorting();
                 Debug.Log($"장비 분해");
 
             }
@@ -289,166 +141,6 @@ namespace MKH
         #region 아이템 정보
         private void Info()
         {
-            #region 초기 버전 사용 X
-            /* for (int i = 0; i < slots.Length; i++)
-             {
-                 if (i == selectedButtonsIndex)
-                 {
-                     // 장비창 설명
-                     if (i < 9)
-                     {
-                         // 장비 슬롯에 아이템이 있는 상태
-                         if (eqSlots[i].Item != null)
-                         {
-                             eqName.text = eqSlots[i].Item.Name;
-                             eqDescription.text = eqSlots[i].Item.Description;
-                             ivName.text = "-";
-                             ivDescription.text = "";
-                         }
-                         // 장비 슬롯에 아이템이 없는 상태
-                         else if (eqSlots[i].Item == null)
-                         {
-                             eqName.text = "-";
-                             eqDescription.text = "";
-                             ivName.text = "-";
-                             ivDescription.text = "";
-                         }
-                     }
-                     // 인벤토리 설명
-                     else if (i >= 9)
-                     {
-                         // 인벤토리 슬롯에 아이템 있는 상태
-                         if (ivSlots[i - 9].Item != null)
-                         {
-                             ivName.text = ivSlots[i - 9].Item.Name;
-                             ivDescription.text = ivSlots[i - 9].Item.Description;
-
-                             // 아이템 타입 별 인벤토리와 장비 비교
-                             switch (ivSlots[i - 9].Item.Type)
-                             {
-                                 case ItemType.Helmet:
-                                     if (eqSlots[0].Item != null)
-                                     {
-                                         eqName.text = eqSlots[0].Item.Name;
-                                         eqDescription.text = eqSlots[0].Item.Description;
-                                     }
-                                     else if (eqSlots[0].Item == null)
-                                     {
-                                         eqName.text = "-";
-                                         eqDescription.text = "";
-                                     }
-                                     break;
-                                 case ItemType.Shirts:
-                                     if (eqSlots[1].Item != null)
-                                     {
-                                         eqName.text = eqSlots[1].Item.Name;
-                                         eqDescription.text = eqSlots[1].Item.Description;
-                                     }
-                                     else if (eqSlots[1].Item == null)
-                                     {
-                                         eqName.text = "-";
-                                         eqDescription.text = "";
-                                     }
-                                     break;
-                                 case ItemType.Glasses:
-                                     if (eqSlots[2].Item != null)
-                                     {
-                                         eqName.text = eqSlots[2].Item.Name;
-                                         eqDescription.text = eqSlots[2].Item.Description;
-                                     }
-                                     else if (eqSlots[2].Item == null)
-                                     {
-                                         eqName.text = "-";
-                                         eqDescription.text = "";
-                                     }
-                                     break;
-                                 case ItemType.Gloves:
-                                     if (eqSlots[3].Item != null)
-                                     {
-                                         eqName.text = eqSlots[3].Item.Name;
-                                         eqDescription.text = eqSlots[3].Item.Description;
-                                     }
-                                     else if (eqSlots[3].Item == null)
-                                     {
-                                         eqName.text = "-";
-                                         eqDescription.text = "";
-                                     }
-                                     break;
-                                 case ItemType.Pants:
-                                     if (eqSlots[4].Item != null)
-                                     {
-                                         eqName.text = eqSlots[4].Item.Name;
-                                         eqDescription.text = eqSlots[4].Item.Description;
-                                     }
-                                     else if (eqSlots[4].Item == null)
-                                     {
-                                         eqName.text = "-";
-                                         eqDescription.text = "";
-                                     }
-                                     break;
-                                 case ItemType.Earring:
-                                     if (eqSlots[5].Item != null)
-                                     {
-                                         eqName.text = eqSlots[5].Item.Name;
-                                         eqDescription.text = eqSlots[5].Item.Description;
-                                     }
-                                     else if (eqSlots[5].Item == null)
-                                     {
-                                         eqName.text = "-";
-                                         eqDescription.text = "";
-                                     }
-                                     break;
-                                 case ItemType.Ring:
-                                     if (eqSlots[6].Item != null)
-                                     {
-                                         eqName.text = eqSlots[6].Item.Name;
-                                         eqDescription.text = eqSlots[6].Item.Description;
-                                     }
-                                     else if (eqSlots[6].Item == null)
-                                     {
-                                         eqName.text = "-";
-                                         eqDescription.text = "";
-                                     }
-                                     break;
-                                 case ItemType.Shoes:
-                                     if (eqSlots[7].Item != null)
-                                     {
-                                         eqName.text = eqSlots[7].Item.Name;
-                                         eqDescription.text = eqSlots[7].Item.Description;
-                                     }
-                                     else if (eqSlots[7].Item == null)
-                                     {
-                                         eqName.text = "-";
-                                         eqDescription.text = "";
-                                     }
-                                     break;
-                                 case ItemType.Necklace:
-                                     if (eqSlots[8].Item != null)
-                                     {
-                                         eqName.text = eqSlots[8].Item.Name;
-                                         eqDescription.text = eqSlots[8].Item.Description;
-                                     }
-                                     else if (eqSlots[8].Item == null)
-                                     {
-                                         eqName.text = "-";
-                                         eqDescription.text = "";
-                                     }
-                                     break;
-                             }
-                         }
-                         // 인벤토리 슬롯에 아이템이 없는 상태
-                         else if (ivSlots[i - 9].Item == null)
-                         {
-                             ivName.text = "-";
-                             ivDescription.text = "";
-                             eqName.text = "-";
-                             eqDescription.text = "";
-                         }
-                     }
-                 }
-             }*/
-            #endregion
-
             GameObject obj = EventSystem.current.currentSelectedGameObject;
             if (obj == null)
             {
@@ -469,11 +161,12 @@ namespace MKH
 
             InventorySlot slot = obj.GetComponentInParent<InventorySlot>();
             if (slot == null)
-                return;
-
-            if (slot.isEquip == true)
             {
-                // 장비창 설명
+                return;
+            }
+
+            if (slot.isEquip) // 장비 슬롯
+            {
                 // 장비 슬롯에 아이템이 있는 상태
                 if (slot.Item != null)
                 {
@@ -491,7 +184,7 @@ namespace MKH
                     ivDescription.text = "";
                 }
             }
-            else
+            else if (!slot.isEquip) //인벤토리 슬롯
             {
                 if (slot.Item != null)
                 {
@@ -499,116 +192,20 @@ namespace MKH
                     ivDescription.text = slot.Item.Description;
 
                     // 아이템 타입 별 인벤토리와 장비 비교
-                    switch (slot.Item.Type)
+                    int index = (int)slot.Item.Type;
+                    if (index >= 0 && index < mEquipInventory.mSlots.Count)
                     {
-                        case ItemType.Helmet:
-                            if (eqSlots[0].Item != null)
-                            {
-                                eqName.text = eqSlots[0].Item.Name;
-                                eqDescription.text = eqSlots[0].Item.Description;
-                            }
-                            else if (eqSlots[0].Item == null)
-                            {
-                                eqName.text = "-";
-                                eqDescription.text = "";
-                            }
-                            break;
-                        case ItemType.Shirts:
-                            if (eqSlots[1].Item != null)
-                            {
-                                eqName.text = eqSlots[1].Item.Name;
-                                eqDescription.text = eqSlots[1].Item.Description;
-                            }
-                            else if (eqSlots[1].Item == null)
-                            {
-                                eqName.text = "-";
-                                eqDescription.text = "";
-                            }
-                            break;
-                        case ItemType.Glasses:
-                            if (eqSlots[2].Item != null)
-                            {
-                                eqName.text = eqSlots[2].Item.Name;
-                                eqDescription.text = eqSlots[2].Item.Description;
-                            }
-                            else if (eqSlots[2].Item == null)
-                            {
-                                eqName.text = "-";
-                                eqDescription.text = "";
-                            }
-                            break;
-                        case ItemType.Gloves:
-                            if (eqSlots[3].Item != null)
-                            {
-                                eqName.text = eqSlots[3].Item.Name;
-                                eqDescription.text = eqSlots[3].Item.Description;
-                            }
-                            else if (eqSlots[3].Item == null)
-                            {
-                                eqName.text = "-";
-                                eqDescription.text = "";
-                            }
-                            break;
-                        case ItemType.Pants:
-                            if (eqSlots[4].Item != null)
-                            {
-                                eqName.text = eqSlots[4].Item.Name;
-                                eqDescription.text = eqSlots[4].Item.Description;
-                            }
-                            else if (eqSlots[4].Item == null)
-                            {
-                                eqName.text = "-";
-                                eqDescription.text = "";
-                            }
-                            break;
-                        case ItemType.Earring:
-                            if (eqSlots[5].Item != null)
-                            {
-                                eqName.text = eqSlots[5].Item.Name;
-                                eqDescription.text = eqSlots[5].Item.Description;
-                            }
-                            else if (eqSlots[5].Item == null)
-                            {
-                                eqName.text = "-";
-                                eqDescription.text = "";
-                            }
-                            break;
-                        case ItemType.Ring:
-                            if (eqSlots[6].Item != null)
-                            {
-                                eqName.text = eqSlots[6].Item.Name;
-                                eqDescription.text = eqSlots[6].Item.Description;
-                            }
-                            else if (eqSlots[6].Item == null)
-                            {
-                                eqName.text = "-";
-                                eqDescription.text = "";
-                            }
-                            break;
-                        case ItemType.Shoes:
-                            if (eqSlots[7].Item != null)
-                            {
-                                eqName.text = eqSlots[7].Item.Name;
-                                eqDescription.text = eqSlots[7].Item.Description;
-                            }
-                            else if (eqSlots[7].Item == null)
-                            {
-                                eqName.text = "-";
-                                eqDescription.text = "";
-                            }
-                            break;
-                        case ItemType.Necklace:
-                            if (eqSlots[8].Item != null)
-                            {
-                                eqName.text = eqSlots[8].Item.Name;
-                                eqDescription.text = eqSlots[8].Item.Description;
-                            }
-                            else if (eqSlots[8].Item == null)
-                            {
-                                eqName.text = "-";
-                                eqDescription.text = "";
-                            }
-                            break;
+                        Item equipItem = mEquipInventory.mSlots[index].Item;
+                        if (equipItem != null)
+                        {
+                            eqName.text = equipItem.Name;
+                            eqDescription.text = equipItem.Description;
+                        }
+                        else
+                        {
+                            eqName.text = "-";
+                            eqDescription.text = "-";
+                        }
                     }
                 }
                 // 인벤토리 슬롯에 아이템이 없는 상태
@@ -623,27 +220,26 @@ namespace MKH
         }
         #endregion
 
-
         // 아이템 모두 삭제 (인게임 끝날 시 초기화용)
         public void ItemReset()
         {
-            for (int i = 0; i < buttonCount; i++)
+            foreach (var equipSlot in mEquipInventory.mSlots)
             {
-                if (i < 9)
+                if (equipSlot.Item != null)
                 {
-                    if (eqSlots[i].Item != null)
-                    {
-                        eqSlots[i].RemoveEquipmentSlot();
-                    }
-                }
-                else if (i >= 9)
-                {
-                    if (ivSlots[i - 9].Item != null)
-                    {
-                        ivSlots[i - 9].ClearSlot();
-                    }
+                    equipSlot.ClearSlot();
                 }
             }
+
+            foreach (var invenSlot in mInventory.mSlots)
+            {
+                if (invenSlot.Item != null)
+                {
+                    invenSlot.ClearSlot();
+                }
+            }
+            mEquipInventory.CalculateEffect();
+
             Debug.Log("아이템 초기화");
         }
     }

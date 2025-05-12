@@ -1,23 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MKH
 {
-    abstract public class InventoryBase : MonoBehaviour
+    public abstract class InventoryBase : MonoBehaviour
     {
-        [SerializeField] protected GameObject mInventoryBase;
         [SerializeField] protected GameObject mInventorySlotsParent;
-        [SerializeField] public InventorySlot[] mSlots;
+        [SerializeField] public List<InventorySlot> mSlots;
 
         protected void Awake()
         {
-            //if (mInventoryBase.activeSelf)
-            //{
-            //    mInventoryBase.SetActive(false);
-            //}
-
-             mSlots = mInventorySlotsParent.GetComponentsInChildren<InventorySlot>();
+            mSlots = mInventorySlotsParent.GetComponentsInChildren<InventorySlot>().ToList();
         }
     }
 }

@@ -28,10 +28,10 @@ namespace MKH
             // Item 태그 붙은 other 오브젝트
             if (other.gameObject.tag == Tag.Item)
             {
-                for (int i = 0; i < mInventory.mSlots.Length; i++)
+                for (int i = 0; i < mInventory.mSlots.Count; i++)
                 {
-                    // 아이템 타입이 None이 아니고 인벤토리 슬롯이 null 일 때
-                    if (mCurrentItem.Item.Type != ItemType.None && mInventory.mSlots[i].Item == null)
+                    // 인벤토리 슬롯이 null 일 때
+                    if (mInventory.mSlots[i].Item == null)
                     {
                         // 인벤토리에 아이템 추가
                         ObjectPool.Get(effect, transform.position + new Vector3(0, 1, 0), Quaternion.identity, 0.3f);
